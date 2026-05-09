@@ -2,31 +2,31 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="UTF-8">
-    <!-- En güncel ve uyumlu kütüphane sürümleri -->
     <script src="https://aframe.io"></script>
     <script src="https://jsdelivr.net"></script>
     <style>
       body { margin: 0; overflow: hidden; }
+      /* Kamera açılana kadar ekranın siyah kalmasını engeller */
+      .a-canvas { width: 100% !important; height: 100% !important; }
     </style>
   </head>
   <body>
-    <!-- uiScanning: false yaparak o baştaki tarama animasyonunu kapattık, direkt kamera açılır -->
+    <!-- uiScanning: true sayesinde ekranın ortasında bir tarama çizgisi çıkar, çalıştığını anlarsın -->
     <a-scene 
-      mindar-image="imageTargetSrc: ./targets.mind; uiScanning: false;" 
+      mindar-image="imageTargetSrc: ./targets.mind; uiScanning: true; autoStart: true;" 
       color-space="sRGB" 
       renderer="colorManagement: true, physicallyCorrectLights" 
       vr-mode-ui="enabled: false" 
       device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <!-- Resim dosyanın adının tam olarak spiral.png olduğundan emin ol -->
-        <img id="spiral" src="spiral.png">
+        <!-- Resim dosyanın adının spiral.png olduğundan emin ol -->
+        <img id="spiral" src="spiral.png" crossorigin="anonymous">
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <!-- Hedef resmi (Ayçiçeği) görünce spiral belirecek -->
+      <!-- Bu kısım sadece hedefi (ayçiçeğini) görünce tetiklenir -->
       
         <a-plane 
           src="#spiral" 
