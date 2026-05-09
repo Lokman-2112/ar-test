@@ -3,29 +3,31 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <!-- Gerekli AR Kütüphaneleri -->
+    <!-- En güncel ve uyumlu kütüphane sürümleri -->
     <script src="https://aframe.io"></script>
     <script src="https://jsdelivr.net"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+    </style>
   </head>
   <body>
-    <!-- targets.mind dosyasını okuyan ana sahne -->
+    <!-- uiScanning: false yaparak o baştaki tarama animasyonunu kapattık, direkt kamera açılır -->
     <a-scene 
-      mindar-image="imageTargetSrc: ./targets.mind;" 
+      mindar-image="imageTargetSrc: ./targets.mind; uiScanning: false;" 
       color-space="sRGB" 
       renderer="colorManagement: true, physicallyCorrectLights" 
       vr-mode-ui="enabled: false" 
       device-orientation-permission-ui="enabled: false">
       
       <a-assets>
-        <!-- Kullanacağın resim: spiral.png -->
+        <!-- Resim dosyanın adının tam olarak spiral.png olduğundan emin ol -->
         <img id="spiral" src="spiral.png">
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <!-- targets.mind içindeki hedef resim görüldüğünde çalışacak kısım -->
+      <!-- Hedef resmi (Ayçiçeği) görünce spiral belirecek -->
       
-        <!-- Resmin ekranda duruşu -->
         <a-plane 
           src="#spiral" 
           position="0 0 0" 
@@ -34,13 +36,12 @@
           transparent="true" 
           opacity="1">
         </a-plane>
-        <!-- Altındaki yazı -->
         <a-text 
           value="Fibonacci Spirali" 
           color="red" 
-          position="0 -0.7 0" 
-          align="center" 
-          width="4">
+          align="center"
+          position="0 -0.8 0" 
+          width="3">
         </a-text>
       
     </a-scene>
