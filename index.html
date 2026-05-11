@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Eksik olan kütüphane linkini tam olarak buraya ekledim -->
+    <!-- Kütüphane linkini tazeledik -->
     <script src="https://jsdelivr.net"></script>
     <style>
-        body { margin: 0; overflow: hidden; }
+        body { margin: 0; overflow: hidden; background: #000; }
         #loading {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; color: white; display: flex;
@@ -15,16 +15,17 @@
     </style>
 </head>
 <body>
-    <div id="loading">Papatya Takibi Hazırlanıyor...</div>
+    <div id="loading">Sistem Yükleniyor...</div>
 
-    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" 
+    <!-- targets.mind yerine dosyanın şu anki adı olan hedefler.zihin'i yazdım -->
+    <a-scene mindar-image="imageTargetSrc: ./hedefler.zihin;" 
              vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
         
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
         
-            <!-- Papatyayı görünce dönecek olan spiral resmin -->
-            <a-image src="./spiral.png" position="0 0 0" height="1" width="1"
+            <!-- Papatyayı görünce dönecek olan spiral -->
+            <a-image src="./spiral.png" position="0 0 0" height="1.2" width="1.2"
                      animation="property: rotation; to: 0 0 360; loop: true; dur: 3000; easing: linear">
             </a-image>
         
@@ -32,13 +33,11 @@
 
     <script>
         const sceneEl = document.querySelector('a-scene');
-        // Kamera hazır olduğunda yükleniyor ekranını kaldırır
         sceneEl.addEventListener("arReady", () => {
             document.getElementById('loading').style.display = 'none';
         });
-        // Hata durumunda bilgi verir
         sceneEl.addEventListener("arError", () => {
-            document.getElementById('loading').innerText = "Kamera Başlatılamadı!";
+            document.getElementById('loading').innerText = "Kamera İzni Verilmedi!";
         });
     </script>
 </body>
