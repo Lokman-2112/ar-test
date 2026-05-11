@@ -1,49 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://aframe.io"></script>
+    <!-- Eksik olan kütüphane linkini tam olarak buraya ekledim -->
     <script src="https://jsdelivr.net"></script>
     <style>
-      body { margin: 0; overflow: hidden; }
-      /* Kamera açılana kadar ekranın siyah kalmasını engeller */
-      .a-canvas { width: 100% !important; height: 100% !important; }
+        body { margin: 0; overflow: hidden; }
+        #loading {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; color: white; display: flex;
+            justify-content: center; align-items: center; z-index: 999;
+            font-family: sans-serif;
+        }
     </style>
-  </head>
-  <body>
-    <!-- uiScanning: true sayesinde ekranın ortasında bir tarama çizgisi çıkar, çalıştığını anlarsın -->
-    <a-scene 
-      mindar-image="imageTargetSrc: ./targets.mind; uiScanning: true; autoStart: true;" 
-      color-space="sRGB" 
-      renderer="colorManagement: true, physicallyCorrectLights" 
-      vr-mode-ui="enabled: false" 
-      device-orientation-permission-ui="enabled: false">
-      
-      <a-assets>
-        <!-- Resim dosyanın adının spiral.png olduğundan emin ol -->
-        <img id="spiral" src="spiral.png" crossorigin="anonymous">
-      </a-assets>
+</head>
+<body>
+    <div id="loading">Papatya Takibi Hazırlanıyor...</div>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" 
+             vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+        
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <!-- Bu kısım sadece hedefi (ayçiçeğini) görünce tetiklenir -->
-      
-        <a-plane 
-          src="#spiral" 
-          position="0 0 0" 
-          height="1" 
-          width="1.618" 
-          transparent="true" 
-          opacity="1">
-        </a-plane>
-        <a-text 
-          value="Fibonacci Spirali" 
-          color="red" 
-          align="center"
-          position="0 -0.8 0" 
-          width="3">
-        </a-text>
-      
+        
+            <!-- Papatyayı görünce dönecek olan spiral resmin -->
+            <a-image src="./spiral.png" position="0 0 0" height="1" width="1"
+                     animation="property: rotation; to: 0 0 360; loop: true; dur: 3000; easing: linear">
+            </a-image>
+        
     </a-scene>
-  </body>
+
+    <script>
+        const sceneEl = document.querySelector('a-scene');
+        // Kamera hazır olduğunda yükleniyor ekranını kaldırır
+        sceneEl.addEventListener("arReady", () => {
+            document.getElementById('loading').style.display = 'none';
+        });
+        // Hata durumunda bilgi verir
+        sceneEl.addEventListener("arError", () => {
+            document.getElementById('loading').innerText = "Kamera Başlatılamadı!";
+        });
+    </script>
+</body>
 </html>
